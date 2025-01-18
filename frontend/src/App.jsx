@@ -7,7 +7,8 @@ import HomeScreen from "./pages/HomeScreen";
 import ProfileScreen from "./pages/ProfileScreen";
 import NewProductScreen from "./pages/NewProductScreen";
 import FavoritesScreen from "./pages/FavoritesScreen";
-import "./App.css";
+import './styles/App.css'
+import Navbar from "./components/Navbar";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,6 +16,7 @@ function App() {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<LoginScreen/>}/>
           <Route path="/register" element={<RegisterScreen/>}/>
