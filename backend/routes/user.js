@@ -2,17 +2,17 @@ import express from "express";
 import db from "../db/connection.js";
 import { ObjectId } from "mongodb";
 
-const router = express.Router();
+const userRouter = express.Router();
 
 //Getting all Users
-router.get("/", async(req, res) => {
+userRouter.get("/", async(req, res) => {
     const collection = await db.collection("users");
     let result = await collection.find({}).toArray();
     res.send(result).status(200);
 })
 
 //Getting User by ID
-router.get("/:id", async(req, res) => {
+userRouter.get("/:id", async(req, res) => {
     const collection = await db.collection("users");
     let query = {_id: new ObjectId(req.params.id)}
     let result = await collection.findOne(query);
@@ -24,7 +24,7 @@ router.get("/:id", async(req, res) => {
 })
 
 //Authenticating User with Email and Password
-router.post("/:email/:password", async(req, res) => {
+userRouter.post("/:email/:password", async(req, res) => {
     const collection = await db.collection("users");
     const query = {email: req.params.email, password: req.params.password};
     const result = await collection.findOne(query);
@@ -32,7 +32,7 @@ router.post("/:email/:password", async(req, res) => {
 })
 
 //Registering a New User
-router.post("/", async(req, res) => {
+userRouter.post("/", async(req, res) => {
     try{
         let newUser = {
             userName: req.body.userName,
@@ -60,7 +60,7 @@ router.post("/", async(req, res) => {
 });
 
 //Getting User by Email
-router.get("/:email", async(req, res) => {
+userRouter.get("/:email", async(req, res) => {
     const collection = await db.collection("users");
     let query = {email: req.params.email}
     let result = await collection.findOne(query);
@@ -68,7 +68,7 @@ router.get("/:email", async(req, res) => {
 })
 
 //Updating a User
-router.patch("/:id", async(req, res) => {
+userRouter.patch("/:id", async(req, res) => {
     try{
         const collection = await db.collection("users");
         const query = {_id: new ObjectId(req.params.id)};
@@ -95,7 +95,7 @@ router.patch("/:id", async(req, res) => {
 });
 
 //Deletes a User by Id
-router.delete("/:id", async(req, res) => {
+userRouter.delete("/:id", async(req, res) => {
     try{
         const collection = await db.collection("users");
         const query = {_id: new ObjectId(req.params.id)};
@@ -107,4 +107,4 @@ router.delete("/:id", async(req, res) => {
     }
 });
 
-export default router;
+export default userRouter;
